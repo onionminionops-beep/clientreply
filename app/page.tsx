@@ -2,6 +2,12 @@
 
 import { useState } from "react";
 
+const STUB_REPLIES = {
+  firm: "Thanks for reaching out. I understand the request, but given our current scope and timeline, we'd need to adjust the deliverables or extend the deadline. Let's schedule a quick call to discuss trade-offs and find the right path forward.",
+  warm: "I really appreciate you sharing this! I can see why this matters. To make it work without derailing what we've planned, let's explore a few options together. When's a good time to chat through what's flexible on both sides?",
+  clarify: "Thanks for this. Before I respond fully, I want to make sure I understand correctly. Are you asking about [specific aspect], or is this more about [alternative interpretation]? A quick clarification will help me give you the most useful answer.",
+};
+
 export default function Home() {
   const [email, setEmail] = useState("");
   const [context, setContext] = useState("");
@@ -34,9 +40,15 @@ export default function Home() {
     }
   };
 
+  const tones = [
+    { key: "firm", label: "FIRM", color: "text-red-400" },
+    { key: "warm", label: "WARM", color: "text-amber-400" },
+    { key: "clarify", label: "CLARIFY", color: "text-blue-400" },
+  ];
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4">
-      <div className="w-full max-w-2xl space-y-8">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 py-12">
+      <div className="w-full max-w-3xl space-y-8">
         <div className="text-center space-y-2">
           <h1 className="text-4xl font-bold tracking-tight">ClientReply</h1>
           <p className="text-inbox-muted text-lg">
@@ -80,39 +92,39 @@ export default function Home() {
             </button>
           </div>
         ) : (
-          <div className="space-y-6">
-            <div className="bg-inbox-card border border-inbox-border rounded-lg p-6">
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-sm font-medium text-inbox-muted">
-                  FIRM
-                </span>
-                <span className="text-xs bg-inbox-bg px-2 py-1 rounded">
-                  Preview
-                </span>
-              </div>
-              <div className="relative">
-                <p className="text-inbox-text/30 blur-[3px] select-none">
-                  Thanks for reaching out. I understand the request, but given
-                  our current scope and timeline, we'd need to adjust the
-                  deliverables or extend the deadline. Let's schedule a quick
-                  call to discuss trade-offs and find the right path forward.
-                </p>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="bg-inbox-bg/90 backdrop-blur-sm px-6 py-3 rounded-lg border border-inbox-border">
-                    <p className="text-sm font-medium">
-                      Unlock 3 full replies for $9
-                    </p>
+          <div className="space-y-4">
+            {tones.map((tone) => (
+              <div
+                key={tone.key}
+                className="bg-inbox-card border border-inbox-border rounded-lg p-6"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <span className={`text-sm font-semibold ${tone.color}`}>
+                    {tone.label}
+                  </span>
+                  <span className="text-xs bg-inbox-bg px-2 py-1 rounded">
+                    Preview
+                  </span>
+                </div>
+                <div className="relative">
+                  <p className="text-inbox-text/30 blur-[3px] select-none leading-relaxed">
+                    {STUB_REPLIES[tone.key as keyof typeof STUB_REPLIES]}
+                  </p>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="bg-inbox-bg/95 backdrop-blur-sm px-4 py-2 rounded border border-inbox-border">
+                      <p className="text-xs font-medium">Unlock for $9</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            ))}
 
             <button
               onClick={handleUnlock}
               disabled={loading}
-              className="w-full bg-inbox-accent text-white font-semibold py-4 rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors text-lg"
+              className="w-full bg-inbox-accent text-white font-semibold py-4 rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors text-lg mt-6"
             >
-              {loading ? "Redirecting..." : "Unlock Full Replies — $9"}
+              {loading ? "Redirecting..." : "Unlock 3 Full Replies — $9"}
             </button>
 
             <button
@@ -124,7 +136,7 @@ export default function Home() {
           </div>
         )}
 
-        <div className="text-center text-xs text-inbox-muted pt-8">
+        <div className="text-center text-xs text-inbox-muted pt-4">
           <p>For freelancers mid-conflict. Sharp replies, not fluff.</p>
         </div>
       </div>
