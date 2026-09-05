@@ -136,8 +136,19 @@ export default function Home() {
           </div>
         )}
 
-        <div className="text-center text-xs text-inbox-muted pt-4">
+        <div className="text-center text-xs text-inbox-muted pt-4 space-y-4">
           <p>For freelancers mid-conflict. Sharp replies, not fluff.</p>
+          <a
+            href="https://thesaasdir.com/product/clientreply?ref=badge"
+            rel="dofollow"
+          >
+            <img
+              src="https://thesaasdir.com/badge/clientreply.svg"
+              alt="Featured on TheSaaSDir"
+              width={182}
+              height={46}
+            />
+          </a>
         </div>
       </div>
     </div>
