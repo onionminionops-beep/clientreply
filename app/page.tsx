@@ -1,4 +1,5 @@
 "use client";
+import posthog from "posthog-js";
 
 import { useState } from "react";
 
@@ -25,7 +26,8 @@ export default function Home() {
   const handleUnlock = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/checkout", {
+      const res = await posthog.capture("checkout_cta_clicked", { product: "ClientReply" });
+      fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, context }),

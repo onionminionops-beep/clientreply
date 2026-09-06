@@ -1,5 +1,6 @@
 "use client";
 
+import PurchaseTracker from "@/app/components/PurchaseTracker";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
@@ -9,6 +10,7 @@ function SuccessContent() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4">
+      <PurchaseTracker product="ClientReply" />
       <div className="w-full max-w-2xl text-center space-y-6">
         <div className="text-6xl mb-4">✓</div>
         <h1 className="text-3xl font-bold">Payment Successful</h1>
@@ -33,7 +35,7 @@ function SuccessContent() {
   );
 }
 
-export default function Success() {
+export default function SuccessPage() {
   return (
     <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
       <SuccessContent />
